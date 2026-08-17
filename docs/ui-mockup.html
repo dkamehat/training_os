@@ -1,0 +1,209 @@
+<title>Training OS 操作イメージ</title>
+<style>
+:root{
+  --bg:#f2f4f6; --surface:#ffffff; --ink:#1c232c; --sub:#5b6672; --line:#d8dee5;
+  --sys:#3e6db5; --sys-bg:#e8eef8; --man:#b8860b; --man-bg:#faf3dc; --dat:#3e8e5a; --dat-bg:#e6f2ea;
+  --red:#c6413a; --red-bg:#f9e8e6; --chip-ink:#fff;
+  --phone:#ffffff; --phone-edge:#1c232c;
+}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14181d; --surface:#1d232b; --ink:#e8ecf1; --sub:#96a1ad; --line:#323b45;
+    --sys:#6f9bd9; --sys-bg:#22304a; --man:#d9b04a; --man-bg:#3a3122; --dat:#63b585; --dat-bg:#20372a; --red:#e07a72; --red-bg:#452525;
+    --phone:#1d232b; --phone-edge:#0c0f13;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14181d; --surface:#1d232b; --ink:#e8ecf1; --sub:#96a1ad; --line:#323b45;
+  --sys:#6f9bd9; --sys-bg:#22304a; --man:#d9b04a; --man-bg:#3a3122; --dat:#63b585; --dat-bg:#20372a;
+  --red:#e07a72; --red-bg:#452525; --phone:#1d232b; --phone-edge:#0c0f13;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;margin:0;padding:32px 20px 64px;line-height:1.6}
+.wrap{max-width:1060px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+header h1{font-size:1.9rem;font-weight:800;margin:0 0 4px;letter-spacing:.01em}
+header p{color:var(--sub);margin:0;max-width:46em}
+h2{font-size:1.15rem;font-weight:800;margin:0 0 4px;border-left:5px solid var(--red);padding-left:10px}
+.note{color:var(--sub);font-size:.85rem;margin:0 0 14px;padding-left:15px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;margin-bottom:18px;padding-left:15px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+.flowset{display:flex;flex-direction:column;gap:14px}
+.flow{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.flow h3{margin:0 0 10px;font-size:.92rem;font-weight:700;display:flex;gap:10px;align-items:baseline}
+.flow h3 .t{color:var(--sub);font-weight:600;font-size:.78rem;font-variant-numeric:tabular-nums}
+.steps{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:4px}
+.step{min-width:120px;flex:1;border-radius:8px;padding:8px 10px;font-size:.78rem;line-height:1.45;position:relative}
+.step b{display:block;font-size:.8rem}
+.step small{color:inherit;opacity:.75}
+.step.sys{background:var(--sys-bg);border:1px solid var(--sys)}
+.step.man{background:var(--man-bg);border:1px solid var(--man)}
+.step.dat{background:var(--dat-bg);border:1px solid var(--dat)}
+.arr{align-self:center;padding:0 6px;color:var(--sub);flex:0 0 auto;font-weight:700}
+.tag{font-size:.66rem;font-weight:800;letter-spacing:.08em;display:inline-block;margin-bottom:2px}
+.sys .tag{color:var(--sys)} .man .tag{color:var(--man)} .dat .tag{color:var(--dat)}
+/* phones */
+.phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.phone{background:var(--phone);border:2px solid var(--phone-edge);border-radius:26px;padding:16px 14px 20px;box-shadow:0 4px 14px rgba(0,0,0,.12);display:flex;flex-direction:column;gap:10px;font-size:.8rem}
+.phone .bar{width:56px;height:5px;border-radius:3px;background:var(--line);margin:0 auto}
+.phone h4{margin:2px 0 0;font-size:.95rem;font-weight:800}
+.phone .cap{color:var(--sub);font-size:.72rem;margin:-6px 0 2px}
+.q{display:flex;flex-direction:column;gap:4px}
+.q label{font-weight:700;font-size:.76rem}
+.segs{display:flex;gap:5px}
+.seg{flex:1;text-align:center;border:1px solid var(--line);border-radius:7px;padding:5px 2px;color:var(--sub);cursor:pointer;font-variant-numeric:tabular-nums}
+.seg.on{background:var(--man-bg);border-color:var(--man);color:var(--ink);font-weight:700}
+.done{background:var(--dat);color:#fff;border:none;border-radius:9px;padding:9px;font-weight:800;text-align:center;margin-top:2px}
+table{border-collapse:collapse;width:100%;font-size:.72rem}
+th{color:var(--sub);font-weight:600;text-align:left;padding:3px 4px;border-bottom:1px solid var(--line);font-size:.66rem}
+td{padding:5px 4px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.blk{font-size:.64rem;font-weight:800;letter-spacing:.08em;color:var(--sub);padding-top:8px}
+.cb{display:inline-block;width:15px;height:15px;border:1.5px solid var(--sub);border-radius:4px;text-align:center;line-height:14px;font-size:.66rem}
+.cb.on{background:var(--dat);border-color:var(--dat);color:#fff}
+.edited{color:var(--red);font-weight:700}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:20px;padding:2px 9px;font-size:.7rem;color:var(--sub)}
+.chip.warn{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+.digest{display:flex;flex-direction:column;gap:7px}
+.status{background:var(--dat-bg);border:1px solid var(--dat);border-radius:9px;padding:8px 10px;font-weight:700;font-size:.78rem}
+.row{display:flex;justify-content:space-between;gap:8px}
+.row .k{color:var(--sub)} .row .v{font-variant-numeric:tabular-nums;font-weight:700}
+.judge{background:var(--man-bg);border:1px solid var(--man);border-radius:9px;padding:8px 10px}
+.actions{display:flex;gap:6px;margin-top:2px}
+.btn{flex:1;text-align:center;border-radius:8px;padding:7px;font-weight:800;font-size:.76rem;border:1px solid var(--line);color:var(--sub)}
+.btn.pri{background:var(--sys);border-color:var(--sys);color:#fff}
+.post{border:1px solid var(--line);border-radius:9px;padding:8px 10px;display:flex;flex-direction:column;gap:5px}
+.post .h{display:flex;justify-content:space-between;font-size:.68rem;color:var(--sub);font-weight:700}
+.post .a{display:flex;gap:5px}
+.post .a span{flex:1;text-align:center;border:1px solid var(--line);border-radius:7px;padding:4px;font-size:.7rem;font-weight:700}
+.post .a .ok{background:var(--dat);border-color:var(--dat);color:#fff}
+footer{color:var(--sub);font-size:.78rem;border-top:1px solid var(--line);padding-top:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+<header>
+  <h1>Training OS 操作イメージ</h1>
+  <p>週あたり人間の作業は合計約1時間。それ以外は全部システムとデータが回す——その分担をワークフローとUIで示す。</p>
+</header>
+
+<section>
+  <h2>ワークフロー（誰が・いつ・何を）</h2>
+  <p class="note">色＝担い手。IPFプレート色に対応: <b>黄=手作業</b>（あなたがやること）/ <b>青=システム</b>（Routine・Claude・ルール）/ <b>緑=データ</b>（Notion DB）。</p>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--man)"></span>手作業（週合計 約60分）</span>
+    <span><span class="dot" style="background:var(--sys)"></span>システム（自動）</span>
+    <span><span class="dot" style="background:var(--dat)"></span>データ（保存先）</span>
+  </div>
+  <div class="flowset">
+    <div class="flow"><h3>毎朝 <span class="t">7:00 / 30秒</span></h3>
+      <div class="steps">
+        <div class="step sys"><span class="tag">SYSTEM</span><b>Routine通知</b><small>4問フォームが届く</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>4問タップ</b><small>睡眠/疲労/痛み/発信</small></div><div class="arr">→</div>
+        <div class="step dat"><span class="tag">DATA</span><b>デイリーログDB</b><small>未入力でも成立</small></div><div class="arr">→</div>
+        <div class="step sys"><span class="tag">SYSTEM</span><b>ルール判定</b><small>AI不要。Red時のみ「今日はTechnique枠」通知</small></div>
+      </div>
+    </div>
+    <div class="flow"><h3>トレ日（ジム内） <span class="t">追加時間ゼロ（レストに吸収）</span></h3>
+      <div class="steps">
+        <div class="step dat"><span class="tag">DATA</span><b>Dayページ</b><small>計画セットが✅表で並ぶ（5ブロック）</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>✅ or 数字修正</b><small>計画通り=1タップ。第1セットRPEのみ必須</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>想定+1なら分岐表</b><small>ページ内常設。ジムでAIは呼ばない</small></div><div class="arr">→</div>
+        <div class="step dat"><span class="tag">DATA</span><b>ログDB</b><small>⚠️腰/⚠️肩/↔️左右差 はタグ1タップ</small></div>
+      </div>
+    </div>
+    <div class="flow"><h3>日曜 <span class="t">20:00 / 20分＋発信承認15分</span></h3>
+      <div class="steps">
+        <div class="step sys"><span class="tag">SYSTEM</span><b>P-01先行実行</b><small>KPI算出済みのダイジェスト1枚が届く</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>読む＋3行話す</b><small>要判断は週最大1件</small></div><div class="arr">→</div>
+        <div class="step sys"><span class="tag">SYSTEM</span><b>P-02/03 生成</b><small>次週差分＋Notion更新まで自動</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>差分承認</b><small>デフォルトYes</small></div><div class="arr">→</div>
+        <div class="step sys"><span class="tag">SYSTEM</span><b>P-04 発信バッチ</b><small>X4本+リール3本+note1本</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>一覧承認</b><small>Yes/破棄/一行修正</small></div><div class="arr">→</div>
+        <div class="step sys"><span class="tag">SYSTEM</span><b>予約投稿</b><small>翌週分を配置</small></div>
+      </div>
+    </div>
+    <div class="flow"><h3>月次 <span class="t">30分</span></h3>
+      <div class="steps">
+        <div class="step sys"><span class="tag">SYSTEM</span><b>P-05バッチ</b><small>メタ分析差分・PR対比・自己充足率・バックアップ</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>DOI確認・承認</b><small>claims追記のみ個別チェック</small></div><div class="arr">→</div>
+        <div class="step dat"><span class="tag">DATA</span><b>knowledge/ 更新</b><small>changelog付き</small></div>
+      </div>
+    </div>
+    <div class="flow"><h3>崩壊時（レビュー未実行） <span class="t">自動</span></h3>
+      <div class="steps">
+        <div class="step sys"><span class="tag">SYSTEM</span><b>1回スキップ検知</b><small>前週プログラムをそのまま継続</small></div><div class="arr">→</div>
+        <div class="step sys"><span class="tag">SYSTEM</span><b>2回連続でMVO化</b><small>ログ＋5分ドリル＋隔週レビューだけに縮退</small></div><div class="arr">→</div>
+        <div class="step man"><span class="tag">手作業</span><b>復帰＝レビュー1回</b><small>溜まった下書きは自動破棄。責めない画面</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>UIイメージ（4画面）</h2>
+  <p class="note">スマホ前提。文字入力はほぼゼロ——タップ・✅・一行修正だけで回る。</p>
+  <div class="phones">
+
+    <div class="phone"><div class="bar"></div>
+      <h4>① 朝のReadiness</h4><p class="cap">7:00通知 → 30秒 / 既定値=最頻値がプリセット</p>
+      <div class="q"><label>睡眠</label><div class="segs"><span class="seg on">7h+</span><span class="seg">6-7</span><span class="seg">&lt;6</span><span class="seg">&lt;4</span></div></div>
+      <div class="q"><label>主観疲労</label><div class="segs"><span class="seg">1-3</span><span class="seg on">4-5</span><span class="seg">6+</span></div></div>
+      <div class="q"><label>痛み</label><div class="segs"><span class="seg on">なし</span><span class="seg">違和感</span><span class="seg">痛い</span></div></div>
+      <div class="q"><label>昨日の発信時間</label><div class="segs"><span class="seg on">0</span><span class="seg">~30m</span><span class="seg">30m+</span></div></div>
+      <div class="done">記録する（今日は 🟢 計画どおり）</div>
+    </div>
+
+    <div class="phone"><div class="bar"></div>
+      <h4>② ジム：Day 2（BPメイン）</h4><p class="cap">計画通り=✅のみ。違うときだけ数字を直す</p>
+      <table>
+        <tr><th></th><th>種目</th><th>重量</th><th>S×R</th><th>RPE</th></tr>
+        <tr><td class="blk" colspan="5">メイン</td></tr>
+        <tr><td><span class="cb on">✓</span></td><td>コンペBP</td><td>131.25</td><td>4×4</td><td>≤7</td></tr>
+        <tr><td><span class="cb on">✓</span></td><td>〃 第1セット</td><td>131.25</td><td>1×4</td><td class="edited">7.5*</td></tr>
+        <tr><td class="blk" colspan="5">セカンダリ</td></tr>
+        <tr><td><span class="cb">　</span></td><td>ポーズBP</td><td>110</td><td>3×3</td><td>7</td></tr>
+        <tr><td class="blk" colspan="5">補助（RIR0-2・長筋長）</td></tr>
+        <tr><td><span class="cb">　</span></td><td>インクラインDB</td><td>28</td><td>3×10</td><td>RIR1</td></tr>
+        <tr><td><span class="cb">　</span></td><td>フェイスプル</td><td>25</td><td>3×15</td><td>RIR2</td></tr>
+        <tr><td class="blk" colspan="5">体幹 / 柔軟</td></tr>
+        <tr><td><span class="cb">　</span></td><td>パロフプレス</td><td>バンド</td><td>2×10s</td><td>—</td></tr>
+        <tr><td><span class="cb">　</span></td><td>トレ後静的 4種</td><td>—</td><td>8分</td><td>—</td></tr>
+      </table>
+      <div class="chips"><span class="chip warn">⚠️肩</span><span class="chip">⚠️腰</span><span class="chip">↔️左右差</span><span class="chip">💤</span></div>
+      <div class="judge" style="font-size:.7rem">*第1セット想定+0.5 → 分岐表: このまま続行OK（+1から縮退）</div>
+    </div>
+
+    <div class="phone"><div class="bar"></div>
+      <h4>③ 日曜ダイジェスト</h4><p class="cap">読了2分。正常KPIは畳む・要判断は最大1件</p>
+      <div class="digest">
+        <div class="status">🟢 オントラック — 685まで残り 64.5kg（月次ペース +6.2 ✅）</div>
+        <div class="row"><span class="k">e1RM S/B/D</span><span class="v">213 / 166 / 247</span></div>
+        <div class="row"><span class="k">先週比</span><span class="v">+1.0 / +1.5 / ±0</span></div>
+        <div class="row"><span class="k">疲労（3週傾向）</span><span class="v">🟡1回・→横ばい</span></div>
+        <div class="row"><span class="k">体重 7日平均</span><span class="v">86.4kg（+0.17%/週 ✅）</span></div>
+        <div class="judge"><b>要判断（1件）:</b> DLが2週停滞。来週 ①据え置きで技術週 ②-5%再構築 → <b>推奨①</b></div>
+        <div style="font-size:.74rem;color:var(--sub)">来週の差分: Day2 BP +1.25kg、他は据え置き。補助は前週同。</div>
+        <div class="actions"><span class="btn pri">承認して次週生成</span><span class="btn">修正を話す</span></div>
+      </div>
+    </div>
+
+    <div class="phone"><div class="bar"></div>
+      <h4>④ 発信の一覧承認</h4><p class="cap">週1回15分。破棄に罪悪感は不要（破棄率はOS側の改善指標）</p>
+      <div class="post"><div class="h"><span>X・月曜ミニログ</span><span>数字先出し</span></div>
+        <div style="font-size:.72rem">SQ 152.5×3×4 @7。3週前に潰れた重量が、今日は会話しながら挙がる。変えたのは根性じゃなくて睡眠の順番——</div>
+        <div class="a"><span class="ok">承認</span><span>破棄</span><span>一行修正</span></div></div>
+      <div class="post"><div class="h"><span>IGリール②・回復系</span><span>女性層向け</span></div>
+        <div style="font-size:.72rem">「休む勇気をデータで正当化する」5分ドリル連続42日目。カット指示: 90/90→タイマー→カレンダー画面</div>
+        <div class="a"><span class="ok">承認</span><span>破棄</span><span>一行修正</span></div></div>
+      <div class="post"><div class="h"><span>note・週次トレログ</span><span>週1</span></div>
+        <div style="font-size:.72rem">W3: DLが止まった週の話（失敗ログ）。数字・グラフはログDBから自動挿入済み</div>
+        <div class="a"><span class="ok">承認</span><span>破棄</span><span>一行修正</span></div></div>
+      <div class="done" style="background:var(--sys)">承認3件を予約投稿へ</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>数値・文面はサンプル（W3想定のイメージ）。実装対象: Notionテンプレートボタン＋✅表（P-03生成）＋Routine 2本（毎朝7:00 / 日曜20:00）。docs/INTERFACE.md が仕様の正。</footer>
+</div>
