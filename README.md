@@ -12,7 +12,7 @@
 - **Notion（ライフOS / PJ2）** = 運用データの正（トレーニングログDB・デイリーログDB・現在のプログラム・Dayページ）。
 - **Claude** = エンジン。週次SOPでプログラム生成・疲労調整・コンテンツ生成を実行。
 
-全体設計は [`docs/DESIGN.md`](docs/DESIGN.md) を参照。
+全体設計は [`docs/DESIGN.md`](docs/DESIGN.md)、**人間との接点は [`docs/INTERFACE.md`](docs/INTERFACE.md)**（負荷バジェット週1時間・例外入力・ダイジェスト1画面）、週次運用の定型プロンプトは [`prompts/`](prompts/) を参照。
 
 ## モジュール一覧
 
